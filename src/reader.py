@@ -17,7 +17,7 @@ class Reader:
         file_contents = open(self.file_path, "r")
 
         # read the content of file as string
-        text_in_file = file_contents.read()
+        text_in_file = self.read_file(self.file_path)
 
         # make a dictionary of character frequency
         self.dict = self.frequency(text_in_file)
@@ -46,7 +46,21 @@ class Reader:
 
         return char_frequency
 
+    def read_file(self, file_path):
+        '''
+        Read the given file as string
+        :param file_path:
+        :return:
+        '''
+        # open file to read
+        file_contents = open(file_path, "r")
+
+        # read the content of file as string
+        text_in_file = file_contents.read()
+
+        return text_in_file
+
 
 if __name__ == "__main__":
     reader = Reader('./text1')
-    print(reader.create_dict())
+    print(sorted(reader.create_dict()))
