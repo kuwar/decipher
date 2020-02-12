@@ -111,4 +111,14 @@ class Decipher(Reader):
     # depending of the value of format. If in a csv format, each word should
     # take one column.
     def write_code(self):
+        # open file in write mode and
+        # if file does not exist then create it
+        decipher_content = open('./resources/decipher.csv', 'w+')
+
+        for i in self.deciphed:
+            # write to the file line by line
+            decipher_content.write(i + "\r\n")
+
+        decipher_content.close()
+
         return True
