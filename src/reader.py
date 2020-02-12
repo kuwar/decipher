@@ -62,5 +62,13 @@ class Reader:
 
 
 if __name__ == "__main__":
+
     reader = Reader('./text1')
-    print(sorted(reader.create_dict()))
+    print(reader.create_dict().keys())
+    print(reader.create_dict().values())
+
+    file_contents = reader.create_dict()
+
+    # print(file_contents.items())
+    for elem in sorted(file_contents.items(), reverse=True, key=lambda x: x[1]):
+        print(elem[0], elem[1])
