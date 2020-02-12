@@ -1,17 +1,17 @@
 class Reader:
-    '''
+    """
     Read the content of the file. One argument is required - the path to file
-    '''
+    """
 
     def __init__(self, file_path):
         self.file_path = file_path
         self.dict = {}
 
     def create_dict(self):
-        '''
+        """
         Create dictionary of file character. Key is the character of the file and value is its frequency
         :return:
-        '''
+        """
 
         # open file to read
         file_contents = open(self.file_path, "r")
@@ -27,12 +27,12 @@ class Reader:
         return self.dict
 
     def frequency(self, text):
-        '''
+        """
         use Counter from collection to count the characters
         Also we can iterate over the text to count frequency of characters
         :param text:
         :return:
-        '''
+        """
         from collections import Counter
         # char_frequency = Counter(text)
 
@@ -47,11 +47,11 @@ class Reader:
         return char_frequency
 
     def read_file(self, file_path):
-        '''
+        """
         Read the given file as string
         :param file_path:
         :return:
-        '''
+        """
         # open file to read
         file_contents = open(file_path, "r")
 

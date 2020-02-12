@@ -4,7 +4,7 @@ import math
 from reader import Reader
 import matplotlib.pyplot as plt
 
-'''
+"""
 In the 5) for the method decipher, replace this line:
 
 "If the key is found in the 2nd file, then it means that its deciphed value is ”e”"
@@ -12,7 +12,7 @@ In the 5) for the method decipher, replace this line:
 by this line:
 
 "If the key is found in the 2nd file, then it means that its deciphed value is ”z”"
-'''
+"""
 
 
 class Decipher(Reader):
