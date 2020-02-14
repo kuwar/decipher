@@ -86,7 +86,13 @@ class Decipher(Reader):
             self.ordered.append(character[0])
 
     def decipher(self):
-        return True
+        all_characters = self.dict
+
+        # sort the content
+        sorted_dict = sorted(all_characters, reverse=True, key=lambda x: x[1])
+
+        # get the highest frequency word
+        key = sorted_dict[0][0]
 
     # returns the entropy of the 1st file
     # determines the randomness of the file
@@ -113,7 +119,7 @@ class Decipher(Reader):
     def write_code(self):
         # open file in write mode and
         # if file does not exist then create it
-        decipher_content = open('./resources/decipher.csv', 'w+')
+        decipher_content = open('./resources/decoded.csv', 'w+')
 
         for i in self.deciphed:
             # write to the file line by line

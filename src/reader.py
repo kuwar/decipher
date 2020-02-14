@@ -1,3 +1,6 @@
+import re
+
+
 class Reader:
     """
     Read the content of the file. One argument is required - the path to file
@@ -13,17 +16,12 @@ class Reader:
         :return:
         """
 
-        # open file to read
-        file_contents = open(self.file_path, "r")
-
         # read the content of file as string
         text_in_file = self.read_file(self.file_path)
 
         # make a dictionary of character frequency
         self.dict = self.frequency(text_in_file)
 
-        # close the file
-        file_contents.close()
         return self.dict
 
     def frequency(self, text):
@@ -58,7 +56,11 @@ class Reader:
         # read the content of file as string
         text_in_file = file_contents.read()
 
-        return text_in_file
+        # close the file
+        file_contents.close()
+
+        # remove the special characters and return content of file
+        return re.sub('[^A-Za-z0-9]+', '', text_in_file)
 
 
 if __name__ == "__main__":
@@ -69,6 +71,10 @@ if __name__ == "__main__":
 
     file_contents = reader.create_dict()
 
+    sorted_dict = sorted(file_contents.items(), reverse=True, key=lambda x: x[1])
+
+    print(sorted_dict[0][0])
+
     # print(file_contents.items())
-    for elem in sorted(file_contents.items(), reverse=True, key=lambda x: x[1]):
+    for elem in sorted_dict:
         print(elem[0], elem[1])
