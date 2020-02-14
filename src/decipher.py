@@ -128,3 +128,14 @@ class Decipher(Reader):
         decipher_content.close()
 
         return True
+
+
+if __name__ == "__main__":
+    print("Decipher")
+
+    decipher = Decipher('./resources/text1', './resources/text2', "abc")
+
+    decipher.creat_dict()
+    decipher.create_hist()
+    decipher.plot_hist()
+    decipher.plot_pie()
