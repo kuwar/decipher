@@ -4,6 +4,8 @@ import math
 from reader import Reader
 import matplotlib.pyplot as plt
 
+MAX_SYMBOL_SIZE = 26
+
 
 class Decipher(Reader):
     def __init__(self, file1, file2, file_extension):
@@ -67,7 +69,7 @@ class Decipher(Reader):
         plt.ylabel("Frequency")
         plt.xlabel("Characters")
         plt.xticks(self.hist, self.hist_symbols)
-        
+
         plt.show()
 
     # fills ordered with every letter in the alphabet, by order
@@ -85,13 +87,38 @@ class Decipher(Reader):
         return self.ordered
 
     def decipher(self):
-        all_characters = self.dict
-
         # sort the content
-        sorted_dict = sorted(all_characters, reverse=True, key=lambda x: x[1])
+        sorted_dict = sorted(
+            self.dict.items(), reverse=True, key=lambda x: x[1])
 
         # get the highest frequency word
-        key = sorted_dict[0][0]
+        key, freq = sorted_dict[0]
+        print(key)
+
+        # -------
+        key = -21
+
+        for symbol in self.coded:
+            if symbol.isalnum():
+                num = ord(symbol)
+                num += key
+
+                if symbol.isupper():
+                    if num > ord('Z'):
+                        num -= 26
+                    elif num < ord('A'):
+                        num += 26
+                elif symbol.islower():
+                    if num > ord('z'):
+                        num -= 26
+                    elif num < ord('a'):
+                        num += 26
+                self.deciphed += chr(num)
+            else:
+                self.deciphed += symbol
+        return self.deciphed
+
+        # --------
 
     # returns the entropy of the 1st file
     # determines the randomness of the file
@@ -144,5 +171,8 @@ if __name__ == "__main__":
     print(decipher.ordered)
 
     print(decipher.compute_entropy())
+
+    decipher.decipher()
+    print(decipher.deciphed)
 
     print(decipher.write_code())
