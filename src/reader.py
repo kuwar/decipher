@@ -19,7 +19,13 @@ class Reader:
         # read the content of file as string
         text_in_file = self.read_file(self.file_path)
 
-        # make a dictionary of character frequency
+        # remove sepcial characters
+        text_in_file = self.get_alpha_only(text_in_file)
+
+        # convert all text to lower case
+        text_in_file = text_in_file.lower()
+
+        # make a dictionary of character's frequency
         self.dict = self.frequency(text_in_file)
 
         return self.dict
@@ -60,7 +66,13 @@ class Reader:
         file_contents.close()
 
         # remove the special characters and return content of file
-        return re.sub('[^A-Za-z0-9]+', '', text_in_file)
+        return text_in_file
+
+    def get_alpha_only(self, mixed_string):
+        """
+        Get only characters ie abcd and numbers
+        """
+        return re.sub('[^A-Za-z0-9]+', '', mixed_string)
 
 
 if __name__ == "__main__":

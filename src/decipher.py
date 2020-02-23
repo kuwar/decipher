@@ -4,32 +4,20 @@ import math
 from reader import Reader
 import matplotlib.pyplot as plt
 
-"""
-In the 5) for the method decipher, replace this line:
-
-"If the key is found in the 2nd file, then it means that its deciphed value is ”e”"
-
-by this line:
-
-"If the key is found in the 2nd file, then it means that its deciphed value is ”z”"
-"""
-
 
 class Decipher(Reader):
-    def __init__(self, file1, file2, chosen_str):
+    def __init__(self, file1, file2, file_extension):
         # initialize the super constructor with file 1
         super().__init__(file1)
 
+        # call super function to make dict
+        super().create_dict()
+
+        # file location to decode the message
         self.file2 = file2
-        self.chosen_str = chosen_str
-
-        # file, dict, hist, ordered, coded, deciphed, entropy and
-        # format
-
-        self.file = ""
-        self.dict = {}
 
         self.hist = []
+        self.hist_symbols = []
         self.ordered = []
 
         # file2 contents
@@ -43,31 +31,44 @@ class Decipher(Reader):
         self.entropy = ""
 
         # str with ”txt” or ”csv” as values
-        self.format = "txt"
+        self.format = file_extension
 
     # fills hist with the frequency of each letter in the
     # alphabetical order
     def create_hist(self):
-        # get the content of file from Reader
-        all_symbol = self.create_dict()
-
         # list of tuple symbol
         # sorted in alphabetical order
-        tuple_symbol = all_symbol.items()
+        tuple_symbol = self.dict.items()
         list_of_tuples = sorted(tuple_symbol, key=lambda x: x[0])
 
         # By iterating assign value to hist
         for character in list_of_tuples:
             self.hist.append(character[1])
+            self.hist_symbols.append(character[0])
+
+        return self.hist
 
     # plots a pie chart of hist with the library of your choice
     def plot_pie(self):
-        plt.pie(self.hist)
+        plt.title("Frequency of each characters")
+        labels = self.hist_symbols
+        sizes = self.hist
+        # fig, ax = plt.subplots()
+        plt.pie(sizes, startangle=90, labels=labels, autopct='%1.1f%%')
+        # Set aspect ratio to be equal so that pie is drawn as a circle.
+        plt.axis('equal')
+        plt.tight_layout()
         plt.show()
 
     # plots an histogram of hist with the library of your choice
     def plot_hist(self):
-        plt.hist(self.hist, bins=10)
+        plt.hist(self.hist, bins=10, label=self.hist_symbols)
+
+        plt.title("Frequency of each characters")
+        plt.ylabel("Frequency")
+        plt.xlabel("Characters")
+        plt.xticks(self.hist, self.hist_symbols)
+        
         plt.show()
 
     # fills ordered with every letter in the alphabet, by order
@@ -133,9 +134,9 @@ class Decipher(Reader):
 if __name__ == "__main__":
     print("Decipher")
 
-    decipher = Decipher('./resources/text1', './resources/text2', "abc")
+    decipher = Decipher('./text1', './text2', "txt")
 
-    decipher.creat_dict()
     decipher.create_hist()
+    print(decipher.hist)
     decipher.plot_hist()
     decipher.plot_pie()
