@@ -73,17 +73,16 @@ class Decipher(Reader):
     # fills ordered with every letter in the alphabet, by order
     # of frequency
     def create_ordered(self):
-        # get the content of file from Reader
-        all_symbol = self.create_dict()
-
         # list of tuple symbol
+        tuple_symbol = self.dict.items()
         # sorted in order of values
-        tuple_symbol = all_symbol.items()
         list_of_tuples = sorted(tuple_symbol, key=lambda x: x[1])
 
         # By iterating assign value to hist
         for character in list_of_tuples:
             self.ordered.append(character[0])
+
+        return self.ordered
 
     def decipher(self):
         all_characters = self.dict
@@ -99,12 +98,11 @@ class Decipher(Reader):
     def compute_entropy(self):
         e = 0
 
-        # get the file data
-        data = self.create_dict()
-        counter = collections.Counter(data)
+        counter = collections.Counter(self.dict)
+        print(counter)
 
         # total number of characters
-        total_length = sum(data.values())
+        total_length = sum(self.dict.values())
 
         for count in counter.values():
             # count is always > 0
@@ -119,7 +117,7 @@ class Decipher(Reader):
     def write_code(self):
         # open file in write mode and
         # if file does not exist then create it
-        decipher_content = open('./resources/decoded.csv', 'w+')
+        decipher_content = open('./decoded.csv', 'w+')
 
         for i in self.deciphed:
             # write to the file line by line
@@ -135,7 +133,16 @@ if __name__ == "__main__":
 
     decipher = Decipher('./text1', './text2', "txt")
 
+    print(decipher.dict)
+
     decipher.create_hist()
     print(decipher.hist)
-    decipher.plot_hist()
-    decipher.plot_pie()
+    # decipher.plot_hist()
+    # decipher.plot_pie()
+
+    decipher.create_ordered()
+    print(decipher.ordered)
+
+    print(decipher.compute_entropy())
+
+    print(decipher.write_code())
