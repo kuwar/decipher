@@ -2,4 +2,4 @@
 venv
 Python Subject
 .vscode/
-rc/__pycache__/
+src/__pycache__/
