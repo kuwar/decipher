@@ -92,10 +92,10 @@ class Decipher(Reader):
             self.dict.items(), reverse=True, key=lambda x: x[1])
 
         # get the highest frequency word
-        key, freq = sorted_dict[0]
+        key_char, freq = sorted_dict[0]
 
-        # -------
-        key = -21
+        # -ve value here shows that it is decipher
+        key = -(ord('z') - ord(key_char))
 
         for symbol in self.coded:
             if symbol.isalnum():
@@ -116,8 +116,6 @@ class Decipher(Reader):
             else:
                 self.deciphed += symbol
         return self.deciphed
-
-        # --------
 
     # returns the entropy of the 1st file
     # determines the randomness of the file
@@ -183,7 +181,7 @@ if __name__ == "__main__":
     output_formater("Characters ordered on basis of frequency")
     print(decipher.ordered)
 
-    #display entropy of file
+    # display entropy of file
     output_formater("Entropy")
     decipher.compute_entropy()
     print(decipher.entropy)
