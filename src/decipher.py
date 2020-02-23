@@ -30,7 +30,7 @@ class Decipher(Reader):
         # empty string
         self.deciphed = ""
 
-        self.entropy = ""
+        self.entropy = 0
 
         # str with ”txt” or ”csv” as values
         self.format = file_extension
@@ -93,7 +93,6 @@ class Decipher(Reader):
 
         # get the highest frequency word
         key, freq = sorted_dict[0]
-        print(key)
 
         # -------
         key = -21
@@ -123,10 +122,7 @@ class Decipher(Reader):
     # returns the entropy of the 1st file
     # determines the randomness of the file
     def compute_entropy(self):
-        e = 0
-
         counter = collections.Counter(self.dict)
-        print(counter)
 
         # total number of characters
         total_length = sum(self.dict.values())
@@ -134,9 +130,9 @@ class Decipher(Reader):
         for count in counter.values():
             # count is always > 0
             p_x = count / total_length
-            e += - p_x * math.log2(p_x)
+            self.entropy += - p_x * math.log2(p_x)
 
-        return e
+        return self.entropy
 
     # write the deciphed code in a .txt file or a .csv file,
     # depending of the value of format. If in a csv format, each word should
@@ -155,24 +151,47 @@ class Decipher(Reader):
         return True
 
 
-if __name__ == "__main__":
-    print("Decipher")
+def output_formater(message):
+    """
+    Display message formater
+    """
+    print("###############################################################")
+    print("#############", message, "############")
+    print("###############################################################")
 
+
+if __name__ == "__main__":
+    output_formater("Decipher")
+
+    # decipher instantiation
     decipher = Decipher('./text1', './text2', "txt")
 
+    output_formater("Dictionary for character frequency")
     print(decipher.dict)
 
     decipher.create_hist()
+    output_formater("Frequency of character alphabetically")
     print(decipher.hist)
-    # decipher.plot_hist()
-    # decipher.plot_pie()
 
+    # display histogram
+    decipher.plot_hist()
+    # display piechart
+    decipher.plot_pie()
+
+    # ordered character ordered based on its frequency
     decipher.create_ordered()
+    output_formater("Characters ordered on basis of frequency")
     print(decipher.ordered)
 
-    print(decipher.compute_entropy())
+    #display entropy of file
+    output_formater("Entropy")
+    decipher.compute_entropy()
+    print(decipher.entropy)
 
+    # encrypt the cipher text
+    output_formater("Decipher value")
     decipher.decipher()
     print(decipher.deciphed)
 
-    print(decipher.write_code())
+    # Write to file the decipher contents
+    decipher.write_code()
