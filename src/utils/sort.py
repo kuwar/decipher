@@ -1,14 +1,20 @@
 def order_fct(n):
-    i = 0
-    while i < len(n):
-        j = 0
-        while j < len(n):
-            if n[i] > n[j]:
+    """
+    Sort the given array of integer in ascending order
+    """
+    swapped = True
+
+    while swapped:
+        swapped = False
+        
+        for i in range(len(n) - 1):
+            
+            if n[i] > n[i + 1]:
                 tmp = n[i]
-                n[i] = n[j]
-                n[j] = tmp
-            j += 1
-        i += 1
+                n[i] = n[i + 1]
+                n[i + 1] = tmp
+                
+                swapped = True
     return n
 
 
@@ -17,7 +23,8 @@ if __name__ == "__main__":
 
     print(order_fct([1, 5, 2, 9, 6]))
 
-    print("---End---")
+    print(order_fct([1, 5, 2, 9, 6]))
 
-    import sys
-    print(sys.path)
+    print(order_fct([8, 10, 1, 2, 5, 6, 9]))
+
+    print("---End---")
