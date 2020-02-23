@@ -60,6 +60,7 @@ class Decipher(Reader):
         plt.axis('equal')
         plt.tight_layout()
         plt.show()
+        # plt.savefig("frequency-pie.png")
 
     # plots an histogram of hist with the library of your choice
     def plot_hist(self):
@@ -71,6 +72,7 @@ class Decipher(Reader):
         plt.xticks(self.hist, self.hist_symbols)
 
         plt.show()
+        # plt.savefig("frequency-hist.png")
 
     # fills ordered with every letter in the alphabet, by order
     # of frequency
