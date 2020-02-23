@@ -45,7 +45,6 @@ class Decipher(Reader):
         for character in list_of_tuples:
             self.hist.append(character[1])
             self.hist_symbols.append(character[0])
-
         return self.hist
 
     # plots a pie chart of hist with the library of your choice
